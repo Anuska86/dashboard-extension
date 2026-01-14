@@ -11,7 +11,7 @@ fetch(
     document.body.style.backgroundImage = `url(${data.urls.full})`;
 
     //Autor's name
-    autorContainer.textContent = `Autor: ${data.user.name}`;
+    autorContainer.textContent = `Author: ${data.user.name}`;
   })
   .catch((error) => {
     console.error("Something went wrong: ", error);
