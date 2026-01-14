@@ -5,7 +5,7 @@ fetch(
   .then((data) => {
     console.log(data);
 
-    document.body.style.backgroundImage = `url(${data.urls.regular})`;
+    document.body.style.backgroundImage = `url(${data.urls.full})`;
   })
   .catch((error) => {
     console.error("Something went wrong: ", error);
