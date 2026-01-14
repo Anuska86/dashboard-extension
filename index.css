@@ -13,9 +13,10 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  color: antiquewhite;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
-  text-shadow: 0px 0px 20px #aaaaaa;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 main {
@@ -44,6 +45,7 @@ main {
 /*AUTHOR*/
 
 #author-container {
+  
   align-self: flex-start;
   border: 2px dashed red;
 }
