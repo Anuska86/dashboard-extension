@@ -34,7 +34,24 @@ main {
 .top-page {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+
   border: 2px dashed red;
+}
+
+#news,
+#weather {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#news {
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*CENTER*/
@@ -43,11 +60,6 @@ main {
   text-align: center;
   align-self: center;
   border: 2px dashed red;
-}
-
-#news,
-#weather {
-  padding: 5px;
 }
 
 /*AUTHOR*/
