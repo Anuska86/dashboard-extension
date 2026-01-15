@@ -1,6 +1,9 @@
 # dashboard-extension
 
+![Dashboard Preview](images/screenshot.png)
+
 Personal Dashboard Chrome Extension
+
 A minimalist, high-performance Chrome Extension that replaces the "New Tab" page with a beautiful, data-driven dashboard. Built with vanilla JavaScript and integrated with multiple third-party APIs.
 
 🚀 Features:
