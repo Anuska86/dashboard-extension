@@ -11,7 +11,7 @@ fetch(
     //Background image
     document.body.style.backgroundImage = `url(${data.urls.full})`;
 
-    //Autor's name
+    //Author's name
     authorContainer.textContent = `Picture by: ${data.user.name}`;
   })
   .catch((error) => {
