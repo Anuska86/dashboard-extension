@@ -49,26 +49,28 @@ updateTime();
 
 //Geolocation
 
-navigator.geolocation.getCurrentPosition((position) => {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+const weatherEl = document.getElementById("weather");
+weatherEl.textContent = "Loading weather...";
 
+navigator.geolocation.getCurrentPosition((position) => {
   fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${config.WEATHER_API_KEY}`
   )
     .then((res) => {
-      if (!res.ok) {
-        throw Error("Weather data not available");
-      }
+      if (!res.ok) throw Error("Weather data not available");
       return res.json();
     })
     .then((data) => {
-      const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-      document.getElementById("weather").innerHTML = `
+      const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+      // This replaces the "Loading..." text with the real data
+      weatherEl.innerHTML = `
                 <img src="${iconUrl}" />
-                <p class="weather-temp">${Math.round(data.main.temp)}°</p>
-                <p class="weather-city">${data.name}</p>
+                <span class="weather-temp">${Math.round(data.main.temp)}°</span>
+                <span class="weather-city">${data.name}</span>
             `;
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      weatherEl.textContent = "Weather unavailable";
+    });
 });
