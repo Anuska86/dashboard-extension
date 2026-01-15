@@ -14,8 +14,11 @@ body {
   -o-background-size: cover;
   background-size: cover;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+
+  font-family: "Funnel Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
