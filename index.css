@@ -23,7 +23,7 @@ body {
 }
 
 main {
-  height: 100vh;
+  height: calc(100vh - 30px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -37,7 +37,7 @@ main {
   align-items: flex-start;
   gap: 20px;
 
-  border: 2px dashed red;
+ 
 }
 
 #news,
@@ -58,6 +58,7 @@ main {
   display: flex;
   align-items: center;
   font-weight: normal;
+  gap: 5px;
 }
 
 #weather img {
@@ -80,7 +81,7 @@ main {
 .time {
   text-align: center;
   align-self: center;
-  border: 2px dashed red;
+ 
 }
 
 /*AUTHOR*/
@@ -89,5 +90,5 @@ main {
   align-self: flex-start;
   min-height: 20px;
   min-width: 100px;
-  border: 2px dashed red;
+ 
 }
