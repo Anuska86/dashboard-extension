@@ -1,5 +1,5 @@
 const authorContainer = document.getElementById("author-container");
-const newsUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=1&apiKey=${newsKey}`;
+const newsUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=1&apiKey=${config.NEWS_API_KEY}`;
 
 fetch(
   "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean"
