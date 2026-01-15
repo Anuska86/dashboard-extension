@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Personal Dashboard",
+  "version": "1.0",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["geolocation"],
+  "host_permissions": [
+    "https://api.openweathermap.org/*",
+    "https://newsapi.org/*",
+    "https://apis.scrimba.com/*"
+  ]
+}
