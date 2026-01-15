@@ -53,6 +53,21 @@ getNews();
 
 document.getElementById("news").addEventListener("click", getNews);
 
+//Greeting
+
+function getGreeting() {
+  const hour = new Date().getHours();
+  const greetingEl = document.getElementById("greeting");
+
+  if (hour < 12) {
+    greetingEl.textContent = "Good morning!";
+  } else if (hour < 18) {
+    greetingEl.textContent = "Good afternoon!";
+  } else {
+    greetingEl.textContent = "Good evening!";
+  }
+}
+
 //Time
 
 function updateTime() {
@@ -61,6 +76,7 @@ function updateTime() {
     hour: "2-digit",
     minute: "2-digit",
   });
+  getGreeting();
 }
 setInterval(updateTime, 1000);
 updateTime();

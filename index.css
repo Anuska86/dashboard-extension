@@ -89,10 +89,23 @@ main {
 
 /*CENTER*/
 
-.time {
-  text-align: center;
+.center-container {
   align-self: center;
-  font-size: 60px;
+  text-align: center;
+}
+
+.time {
+  margin: 0;
+  font-size: 5rem;
+  font-weight: 800;
+}
+
+#greeting {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin: 0;
+  opacity: 0.9;
 }
 
 /*AUTHOR*/
