@@ -41,8 +41,6 @@ function getNews() {
           ? ` [${article.source.name}]`
           : "";
         newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
-
-        newsEl.textContent = `Breaking: ${article.title}`;
       }
     })
     .catch((err) => {
@@ -71,9 +69,30 @@ updateTime();
 
 weatherEl.textContent = "Loading weather...";
 
-navigator.geolocation.getCurrentPosition((position) => {
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    // Success: Fetch weather using coordinates
+    const { latitude, longitude } = position.coords;
+    fetchWeather(latitude, longitude);
+  },
+  (err) => {
+    console.error("Geolocation error:", err.message);
+
+    if (err.code === 1) {
+      weatherEl.textContent = "Location access denied";
+    } else {
+      weatherEl.textContent = "Location unavailable";
+    }
+
+    // Optional: Call fetchWeather with a default city (e.g., London)
+    // fetchWeather(51.5074, -0.1278);
+  },
+  { timeout: 10000 }
+);
+
+function fetchWeather(lat, lon) {
   fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${config.WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`
   )
     .then((res) => {
       if (!res.ok) throw Error("Weather data not available");
@@ -81,7 +100,6 @@ navigator.geolocation.getCurrentPosition((position) => {
     })
     .then((data) => {
       const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-      // This replaces the "Loading..." text with the real data
       weatherEl.innerHTML = `
                 <img src="${iconUrl}" />
                 <span class="weather-temp">${Math.round(data.main.temp)}°</span>
@@ -92,4 +110,4 @@ navigator.geolocation.getCurrentPosition((position) => {
       console.error(err);
       weatherEl.textContent = "Weather unavailable";
     });
-});
+}
