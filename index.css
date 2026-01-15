@@ -45,6 +45,11 @@ main {
   border: 2px dashed red;
 }
 
+#news,
+#weather {
+  padding: 5px;
+}
+
 /*AUTHOR*/
 
 #author-container {

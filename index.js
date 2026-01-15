@@ -28,7 +28,7 @@ fetch(newsUrl)
     if (data.articles && data.articles.length > 0) {
       const article = data.articles[0];
 
-      const newsEl = document.querySelector(".top-page p:first-child");
+      const newsEl = document.getElementById("news");
 
       newsEl.textContent = `Breaking: ${article.title}`;
     }
