@@ -34,3 +34,15 @@ fetch(newsUrl)
     }
   })
   .catch((err) => console.error("News error:", err));
+
+//Time
+
+function updateTime() {
+  const date = new Date();
+  document.querySelector(".time").textContent = date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+setInterval(updateTime, 1000);
+updateTime();
