@@ -32,6 +32,52 @@ if (cachedBg && bgCacheTime && now - bgCacheTime < 2 * 60 * 60 * 1000) {
     });
 }
 
+//Update the background
+
+function getBackground(forceRefresh = false) {
+  const cachedBg = localStorage.getItem("cachedBg");
+  const bgCacheTime = localStorage.getItem("bgCacheTime");
+  const now = Date.now();
+  const expiry = 2 * 60 * 60 * 1000;
+
+  // Use the cache
+  if (!forceRefresh && cachedBg && bgCacheTime && now - bgCacheTime < expiry) {
+    const data = JSON.parse(cachedBg);
+    updateBackgroundUI(data);
+  } else {
+    // Fetch new image
+    fetch(
+      "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("cachedBg", JSON.stringify(data));
+        localStorage.setItem("bgCacheTime", now);
+        updateBackgroundUI(data);
+      })
+      .catch((err) => {
+        document.body.style.backgroundImage = `url(https://wallpapercave.com/wp/wp5252093.jpg)`;
+        document.getElementById(
+          "author-container"
+        ).textContent = `Picture by caverman`;
+      });
+  }
+}
+
+// UI update
+function updateBackgroundUI(data) {
+  document.body.style.backgroundImage = `url(${data.urls.full})`;
+  document.getElementById(
+    "author-container"
+  ).textContent = `Picture by: ${data.user.name}`;
+}
+
+document.getElementById("refresh-bg").addEventListener("click", () => {
+  getBackground(true); //Fresh API call
+});
+
+getBackground();
+
 //News
 
 function getNews() {
