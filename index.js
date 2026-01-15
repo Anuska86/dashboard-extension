@@ -2,7 +2,7 @@ const authorContainer = document.getElementById("author-container");
 const weatherEl = document.getElementById("weather");
 const newsEl = document.getElementById("news");
 
-const newsUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=1&apiKey=${config.NEWS_API_KEY}`;
+const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+business&language=en&sortBy=relevancy&pageSize=20&apiKey=${config.NEWS_API_KEY}`;
 
 //Backgraund and author
 fetch(
@@ -24,18 +24,36 @@ fetch(
 
 //News
 
-fetch(newsUrl)
-  .then((res) => res.json())
-  .then((data) => {
-    if (data.articles && data.articles.length > 0) {
-      const article = data.articles[0];
+function getNews() {
+  const newsEl = document.getElementById("news");
+  newsEl.textContent = "Fetching news...";
 
-      const newsEl = document.getElementById("news");
+  fetch(newsUrl)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.articles && data.articles.length > 0) {
+        // Pick a random article instead of always the first one [0]
 
-      newsEl.textContent = `Breaking: ${article.title}`;
-    }
-  })
-  .catch((err) => console.error("News error:", err));
+        const randomIndex = Math.floor(Math.random() * data.articles.length);
+        const article = data.articles[randomIndex];
+
+        const sourceName = article.source.name
+          ? ` [${article.source.name}]`
+          : "";
+        newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
+
+        newsEl.textContent = `Breaking: ${article.title}`;
+      }
+    })
+    .catch((err) => {
+      console.error("News error:", err);
+      newsEl.textContent = "News currently unavailable";
+    });
+}
+
+getNews();
+
+document.getElementById("news").addEventListener("click", getNews);
 
 //Time
 
