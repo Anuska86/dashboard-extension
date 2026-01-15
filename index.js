@@ -225,3 +225,10 @@ function renderWeather(data) {
         <span class="weather-city">${data.name}</span>
     `;
 }
+
+/*Search input*/
+
+const searchInput = document.querySelector("#search-form input");
+if (searchInput) {
+  searchInput.focus();
+}
