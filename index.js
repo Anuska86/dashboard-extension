@@ -1,13 +1,15 @@
 const authorContainer = document.getElementById("author-container");
+const weatherEl = document.getElementById("weather");
+const newsEl = document.getElementById("news");
+
 const newsUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=1&apiKey=${config.NEWS_API_KEY}`;
 
+//Backgraund and author
 fetch(
   "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean"
 )
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-
     //Background image
     document.body.style.backgroundImage = `url(${data.urls.full})`;
 
@@ -49,7 +51,6 @@ updateTime();
 
 //Geolocation
 
-const weatherEl = document.getElementById("weather");
 weatherEl.textContent = "Loading weather...";
 
 navigator.geolocation.getCurrentPosition((position) => {
