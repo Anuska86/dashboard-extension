@@ -69,23 +69,23 @@ updateTime();
 
 weatherEl.textContent = "Loading weather...";
 
+// Geolocation with Fallback
+weatherEl.textContent = "Loading weather...";
+
 navigator.geolocation.getCurrentPosition(
   (position) => {
-    // Success: Fetch weather using coordinates
+    // Success: Use user's real location
     const { latitude, longitude } = position.coords;
     fetchWeather(latitude, longitude);
   },
   (err) => {
-    console.error("Geolocation error:", err.message);
+    console.warn("Geolocation failed, using default location.");
 
-    if (err.code === 1) {
-      weatherEl.textContent = "Location access denied";
-    } else {
-      weatherEl.textContent = "Location unavailable";
-    }
+    // DEFAULT COORDINATES
+    const defaultLat = 51.5074;
+    const defaultLon = -0.1278;
 
-    // Optional: Call fetchWeather with a default city (e.g., London)
-    // fetchWeather(51.5074, -0.1278);
+    fetchWeather(defaultLat, defaultLon);
   },
   { timeout: 10000 }
 );
