@@ -80,19 +80,22 @@ getBackground();
 
 //News
 
-function getNews() {
+function getNews(forceRefresh = false) {
   const newsEl = document.getElementById("news");
   const cachedNews = localStorage.getItem("cachedNews");
   const cacheTime = localStorage.getItem("newsCacheTime");
   const now = Date.now();
-
   const expiry = 30 * 60 * 1000;
 
-  if (cachedNews && cacheTime && now - cacheTime < expiry) {
-    console.log("Loading news from cache");
+  // Use cache
+  if (!forceRefresh && cachedNews && cacheTime && now - cacheTime < expiry) {
+    console.log("Shuffling from cached news");
     displayNews(JSON.parse(cachedNews));
   } else {
-    console.log("Fetching new news from API");
+    // Update news
+    console.log("Fetching fresh news from API");
+    newsEl.textContent = "Fetching news...";
+
     fetch(newsUrl)
       .then((res) => res.json())
       .then((data) => {
@@ -107,6 +110,25 @@ function getNews() {
       });
   }
 }
+
+// Show random article
+function displayNews(articles) {
+  const randomIndex = Math.floor(Math.random() * articles.length);
+  const article = articles[randomIndex];
+  const sourceName = article.source.name ? ` [${article.source.name}]` : "";
+  document.getElementById(
+    "news"
+  ).textContent = `Breaking: ${article.title}${sourceName}`;
+}
+
+// SHUFFLE current cache
+document.getElementById("news").addEventListener("click", () => getNews(false));
+
+// FETCH new data from API
+document.getElementById("refresh-news").addEventListener("click", (e) => {
+  e.stopPropagation(); // Prevents clicking the button from also triggering the news text click
+  getNews(true);
+});
 
 //UI part
 function displayNews(articles) {

@@ -41,6 +41,16 @@ main {
   gap: 20px;
 }
 
+#news-container {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 10px;
+}
+
 #news,
 #weather {
   padding: 10px;
@@ -59,6 +69,9 @@ main {
   text-overflow: ellipsis;
   cursor: pointer;
   transition: background 0.3s ease;
+  background: transparent;
+  border: none;
+  padding: 10px;
 }
 
 #news:hover {
@@ -67,6 +80,21 @@ main {
 
 #news:active {
   transform: scale(0.98);
+}
+
+#refresh-news {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+#refresh-news:hover {
+  opacity: 1;
+  transform: rotate(90deg);
 }
 
 /*Weather*/
@@ -93,6 +121,11 @@ main {
   font-size: 0.9rem;
 }
 
+#weather:hover {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: default;
+}
+
 /*CENTER*/
 
 .center-container {
@@ -113,8 +146,7 @@ main {
 #greeting {
   font-size: 1.8rem;
   font-weight: 500;
-  margin-bottom: 5px;
-  margin: 0;
+  margin: 0 0 5px 0;
   opacity: 0.9;
 }
 
@@ -136,6 +168,10 @@ main {
 #search-form input:focus {
   width: 400px;
   background: rgba(255, 255, 255, 0.3);
+}
+
+#search-form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /*BOTTOM PAGE*/
