@@ -17,7 +17,7 @@ if (cachedBg && bgCacheTime && now - bgCacheTime < 2 * 60 * 60 * 1000) {
   authorContainer.textContent = `Picture by: ${data.user.name}`;
 } else {
   fetch(
-    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean"
+    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean",
   )
     .then((res) => res.json())
     .then((data) => {
@@ -47,7 +47,7 @@ function getBackground(forceRefresh = false) {
   } else {
     // Fetch new image
     fetch(
-      "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean"
+      "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean",
     )
       .then((res) => res.json())
       .then((data) => {
@@ -57,9 +57,8 @@ function getBackground(forceRefresh = false) {
       })
       .catch((err) => {
         document.body.style.backgroundImage = `url(https://wallpapercave.com/wp/wp5252093.jpg)`;
-        document.getElementById(
-          "author-container"
-        ).textContent = `Picture by caverman`;
+        document.getElementById("author-container").textContent =
+          `Picture by caverman`;
       });
   }
 }
@@ -67,9 +66,8 @@ function getBackground(forceRefresh = false) {
 // UI update
 function updateBackgroundUI(data) {
   document.body.style.backgroundImage = `url(${data.urls.full})`;
-  document.getElementById(
-    "author-container"
-  ).textContent = `Picture by: ${data.user.name}`;
+  document.getElementById("author-container").textContent =
+    `Picture by: ${data.user.name}`;
 }
 
 document.getElementById("refresh-bg").addEventListener("click", () => {
@@ -78,21 +76,21 @@ document.getElementById("refresh-bg").addEventListener("click", () => {
 
 getBackground();
 
-//News
+//NEWS
+
+//get the news
 
 function getNews(forceRefresh = false) {
   const newsEl = document.getElementById("news");
   const cachedNews = localStorage.getItem("cachedNews");
   const cacheTime = localStorage.getItem("newsCacheTime");
   const now = Date.now();
-  const expiry = 30 * 60 * 1000;
+  const expiry = 30 * 60 * 1000; // 30 minutes
 
-  // Use cache
   if (!forceRefresh && cachedNews && cacheTime && now - cacheTime < expiry) {
     console.log("Shuffling from cached news");
     displayNews(JSON.parse(cachedNews));
   } else {
-    // Update news
     console.log("Fetching fresh news from API");
     newsEl.textContent = "Fetching news...";
 
@@ -107,6 +105,7 @@ function getNews(forceRefresh = false) {
       })
       .catch((err) => {
         newsEl.textContent = "News currently unavailable";
+        console.error(err);
       });
   }
 }
@@ -115,34 +114,40 @@ function getNews(forceRefresh = false) {
 function displayNews(articles) {
   const randomIndex = Math.floor(Math.random() * articles.length);
   const article = articles[randomIndex];
+  const newsEl = document.getElementById("news");
+
   const sourceName = article.source.name ? ` [${article.source.name}]` : "";
-  document.getElementById(
-    "news"
-  ).textContent = `Breaking: ${article.title}${sourceName}`;
+
+  // 1. Update the UI text
+  newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
+
+  // 2. Save the URL
+  newsEl.dataset.url = article.url;
+
+  newsEl.style.cursor = "pointer";
 }
 
-// SHUFFLE current cache
-document.getElementById("news").addEventListener("click", () => getNews(false));
+document.getElementById("news").addEventListener("click", (e) => {
+  const url = e.target.dataset.url;
 
-// FETCH new data from API
-document.getElementById("refresh-news").addEventListener("click", (e) => {
-  e.stopPropagation(); // Prevents clicking the button from also triggering the news text click
-  getNews(true);
+  // CTRL + CLICK to open link
+  if (e.ctrlKey || e.metaKey) {
+    if (url) {
+      window.open(url, "_blank");
+    }
+  } else {
+    // NORMAL CLICK to shuffle
+    getNews(false);
+  }
 });
 
-//UI part
-function displayNews(articles) {
-  const randomIndex = Math.floor(Math.random() * articles.length);
-  const article = articles[randomIndex];
-  const sourceName = article.source.name ? ` [${article.source.name}]` : "";
-  document.getElementById(
-    "news"
-  ).textContent = `Breaking: ${article.title}${sourceName}`;
-}
+// Refresh button logic
+document.getElementById("refresh-news").addEventListener("click", (e) => {
+  e.stopPropagation();
+  getNews(true); // Force fresh API call
+});
 
 getNews();
-
-document.getElementById("news").addEventListener("click", getNews);
 
 //Greeting
 
@@ -189,7 +194,7 @@ navigator.geolocation.getCurrentPosition(
 
     fetchWeather(defaultLat, defaultLon);
   },
-  { timeout: 10000 }
+  { timeout: 10000 },
 );
 
 function fetchWeather(lat, lon) {
@@ -206,7 +211,7 @@ function fetchWeather(lat, lon) {
     renderWeather(JSON.parse(cachedWeather));
   } else {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
     )
       .then((res) => res.json())
       .then((data) => {
