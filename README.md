@@ -14,13 +14,19 @@ Intelligent Geolocation: Automatically detects your local weather, with a built-
 
 Dynamic Greetings: Context-aware greetings (Good Morning/Afternoon/Evening) that change based on your local time.
 
-Interactive Controls: \* Shuffle News: Click the headline to cycle through cached articles.
+Interactive Controls: 
 
-Force Refresh: Dedicated refresh buttons for both News and Backgrounds to bypass cache and fetch new data instantly.
+- Shuffle News: Click the headline to cycle through cached articles.
 
-Integrated Search: A centered, glassmorphism-styled Google search bar with auto-focus for immediate utility.
+- Smart Navigation: Use Ctrl + Click (Windows) or Cmd + Click (Mac) to open the full article in a new tab.
 
-Enhanced UI: Modern Glassmorphism design with backdrop-filter blur effects and a dark overlay to ensure text legibility regardless of the background brightness.
+- Dynamic Hints: Intelligent hover states that detect your Operating System to show the correct shortcut instructions.
+
+- Force Refresh: Dedicated refresh buttons for both News and Backgrounds to bypass cache and fetch new data instantly.
+
+- Integrated Search: A centered, glassmorphism-styled Google search bar with auto-focus for immediate utility.
+
+- Enhanced UI: Modern Glassmorphism design with backdrop-filter blur effects and a dark overlay to ensure text legibility regardless of the background brightness.
 
 🛠️ Tech Stack:
 
