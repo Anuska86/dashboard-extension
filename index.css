@@ -41,16 +41,6 @@ main {
   gap: 20px;
 }
 
-#news-container {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding-right: 10px;
-}
-
 #news,
 #weather {
   padding: 10px;
@@ -62,6 +52,16 @@ main {
 
 /*News*/
 
+#news-container {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 10px;
+}
+
 #news {
   max-width: 400px;
   white-space: nowrap;
@@ -72,10 +72,29 @@ main {
   background: transparent;
   border: none;
   padding: 10px;
+  position: relative;
 }
 
 #news:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+#news:hover::after {
+  content: " (Hold " attr(data-key) " to open link)";
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 10px;
+  font-style: italic;
+
+  /* Positioning it as a floating tooltip */
+  position: absolute;
+  left: 0;
+  top: -30px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 #news:active {
@@ -89,7 +108,9 @@ main {
   cursor: pointer;
   font-size: 1.2rem;
   opacity: 0.6;
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 #refresh-news:hover {
@@ -195,7 +216,9 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease, background 0.2s;
+  transition:
+    transform 0.3s ease,
+    background 0.2s;
 }
 
 #refresh-bg:hover {

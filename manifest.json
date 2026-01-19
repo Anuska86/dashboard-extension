@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Personal Dashboard",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "A clean, beautiful dashboard for your new tab with weather, news, and search.",
   "action": {
     "default_icon": "images/icon.png"
@@ -19,7 +19,6 @@
   "host_permissions": [
     "https://api.openweathermap.org/*",
     "https://newsapi.org/*",
-    "https://apis.scrimba.com/*",
-    "https://www.google.com/*"
+    "https://apis.scrimba.com/*"
   ]
 }

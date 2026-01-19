@@ -4,6 +4,9 @@ const newsEl = document.getElementById("news");
 
 const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+business&language=en&sortBy=relevancy&pageSize=20&apiKey=${config.NEWS_API_KEY}`;
 
+const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+const modifierKey = isMac ? "Cmd" : "Ctrl";
+
 //Backgraund and author
 
 const cachedBg = localStorage.getItem("cachedBg");
@@ -118,11 +121,16 @@ function displayNews(articles) {
 
   const sourceName = article.source.name ? ` [${article.source.name}]` : "";
 
-  // 1. Update the UI text
+  // Update the UI text
   newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
 
-  // 2. Save the URL
+  // hint on hover
+  newsEl.title = `Click to shuffle | ${modifierKey} + Click to read article`;
+
+  // Save the URL
   newsEl.dataset.url = article.url;
+
+  newsEl.setAttribute("data-key", modifierKey);
 
   newsEl.style.cursor = "pointer";
 }
