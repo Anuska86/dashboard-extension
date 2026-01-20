@@ -125,7 +125,7 @@ function displayNews(articles) {
   newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
 
   // hint on hover
-  newsEl.title = `Click to shuffle | ${modifierKey} + Click to read article`;
+  newsEl.title = `Click to read article | Click ↺ to shuffle`;
 
   // Save the URL
   newsEl.dataset.url = article.url;
@@ -136,17 +136,17 @@ function displayNews(articles) {
 }
 
 document.getElementById("news").addEventListener("click", (e) => {
-  const url = e.target.dataset.url;
+  const url = e.currentTarget.dataset.url;
 
   // CTRL + CLICK to open link
-  if (e.ctrlKey || e.metaKey) {
-    if (url) {
-      window.open(url, "_blank");
-    }
-  } else {
-    // NORMAL CLICK to shuffle
-    getNews(false);
+  if (url) {
+    window.open(url, "_blank");
   }
+});
+
+document.getElementById("refresh-news").addEventListener("click", (e) => {
+  e.stopPropagation();
+  getNews(true); // Force fresh API call
 });
 
 // Refresh button logic
