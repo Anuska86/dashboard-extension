@@ -231,9 +231,9 @@ function fetchWeather(lat, lon) {
 }
 
 function renderWeather(data) {
-  const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  const iconUrl = `./images/weather.png`;
   weatherEl.innerHTML = `
-        <img src="${iconUrl}" />
+        <img src="${iconUrl}" alt="weather icon" />
         <span class="weather-temp">${Math.round(data.main.temp)}°</span>
         <span class="weather-city">${data.name}</span>
     `;
