@@ -7,6 +7,19 @@ const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+bu
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
+//Local Background
+
+function setLocalBackground(params) {
+  const authorContainer = document.getElementById("author-container");
+
+  const localBgPath = "./images/background.jpg";
+  document.body.style.backgroundImage = `url(${localBgPath})`;
+
+  authorContainer.textContent = `Picture by: Eduardo Mosqueira Rey`;
+}
+
+setLocalBackground();
+
 //Backgraund and author
 
 const cachedBg = localStorage.getItem("cachedBg");
