@@ -231,9 +231,12 @@ function fetchWeather(lat, lon) {
 }
 
 function renderWeather(data) {
-  const iconUrl = `./images/weather.png`;
+  const iconCode = data.weather[0].icon;
+
+  const iconUrl = `./images/weather_icons/${iconCode}.png`;
+
   weatherEl.innerHTML = `
-        <img src="${iconUrl}" alt="weather icon" />
+        <img src="${iconUrl}" alt="${data.weather[0].description}" />
         <span class="weather-temp">${Math.round(data.main.temp)}°</span>
         <span class="weather-city">${data.name}</span>
     `;
