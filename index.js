@@ -15,7 +15,7 @@ function setLocalBackground(params) {
   const localBgPath = "./images/background.jpg";
   document.body.style.backgroundImage = `url(${localBgPath})`;
 
-  authorContainer.textContent = `Picture by: Eduardo Mosqueira Rey`;
+  authorContainer.innerHTML = `Picture by: <a href="https://emosqueira.com/" target="_blank" style="color: white; text-decoration: underline;">Eduardo Mosqueira Rey</a>`;
 }
 
 setLocalBackground();

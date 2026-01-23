@@ -246,4 +246,11 @@ main {
   align-self: flex-start;
   min-height: 20px;
   min-width: 100px;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 5px 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
 }
