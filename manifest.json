@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Personal Dashboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A clean, beautiful dashboard for your new tab with weather, news, and search.",
   "action": {
     "default_icon": "images/icon.png"
@@ -17,7 +17,11 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["images/*.png"],
+      "resources": [
+        "images/*.png",
+        "images/*.jpg",
+        "images/weather_icons/*.png"
+      ],
       "matches": ["<all_urls>"]
     }
   ],
@@ -25,6 +29,7 @@
   "host_permissions": [
     "https://api.openweathermap.org/*",
     "https://newsapi.org/*",
-    "https://apis.scrimba.com/*"
+    "https://apis.scrimba.com/*",
+    "https://images.unsplash.com/*"
   ]
 }
