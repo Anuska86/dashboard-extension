@@ -7,48 +7,16 @@ const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+bu
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
-//Local Background
+//BACKGROUND
 
-function setLocalBackground(params) {
-  const authorContainer = document.getElementById("author-container");
+//Local background
 
-  const localBgPath = "./images/background.jpg";
-  document.body.style.backgroundImage = `url(${localBgPath})`;
-
+function setIntitialFallback() {
+  document.body.style.backgroundImage = `url(./images/background.jpg)`;
   authorContainer.innerHTML = `Picture by: <a href="https://emosqueira.com/" target="_blank" style="color: white; text-decoration: underline;">Eduardo Mosqueira Rey</a>`;
 }
 
-setLocalBackground();
-
-//Backgraund and author
-
-const cachedBg = localStorage.getItem("cachedBg");
-const bgCacheTime = localStorage.getItem("bgCacheTime");
-const now = Date.now();
-
-// Cache background for 2 hours
-if (cachedBg && bgCacheTime && now - bgCacheTime < 2 * 60 * 60 * 1000) {
-  const data = JSON.parse(cachedBg);
-  document.body.style.backgroundImage = `url(${data.urls.full})`;
-  authorContainer.textContent = `Picture by: ${data.user.name}`;
-} else {
-  fetch(
-    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean",
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      localStorage.setItem("cachedBg", JSON.stringify(data));
-      localStorage.setItem("bgCacheTime", now);
-      document.body.style.backgroundImage = `url(${data.urls.full})`;
-      authorContainer.textContent = `Picture by: ${data.user.name}`;
-    })
-    .catch((err) => {
-      document.body.style.backgroundImage = `url(https://wallpapercave.com/wp/wp5252093.jpg)`;
-      authorContainer.textContent = `Picture by caverman`;
-    });
-}
-
-//Update the background
+//Fetch from Unsplash or cache
 
 function getBackground(forceRefresh = false) {
   const cachedBg = localStorage.getItem("cachedBg");
@@ -56,12 +24,9 @@ function getBackground(forceRefresh = false) {
   const now = Date.now();
   const expiry = 2 * 60 * 60 * 1000;
 
-  // Use the cache
   if (!forceRefresh && cachedBg && bgCacheTime && now - bgCacheTime < expiry) {
-    const data = JSON.parse(cachedBg);
-    updateBackgroundUI(data);
+    updateBackgroundUI(JSON.parse(cachedBg));
   } else {
-    // Fetch new image
     fetch(
       "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains,ocean",
     )
@@ -72,25 +37,30 @@ function getBackground(forceRefresh = false) {
         updateBackgroundUI(data);
       })
       .catch((err) => {
-        document.body.style.backgroundImage = `url(https://wallpapercave.com/wp/wp5252093.jpg)`;
-        document.getElementById("author-container").textContent =
-          `Picture by caverman`;
+        console.error("Unsplash fetch failed, keeping local fallback", err);
       });
   }
 }
 
-// UI update
+//Load the image first
+
 function updateBackgroundUI(data) {
-  document.body.style.backgroundImage = `url(${data.urls.full})`;
-  document.getElementById("author-container").textContent =
-    `Picture by: ${data.user.name}`;
+  const imgUrl = data.urls.full;
+  const tempImg = new Image();
+  tempImg.src = imgUrl;
+
+  tempImg.onload = () => {
+    document.body.style.backgroundImage = `url(${imgUrl})`;
+    authorContainer.innerHTML = `Picture by:${data.user.name}`;
+  };
 }
 
-document.getElementById("refresh-bg").addEventListener("click", () => {
-  getBackground(true); //Fresh API call
-});
-
+setIntitialFallback();
 getBackground();
+
+document
+  .getElementById("refresh-bg")
+  .addEventListener("click", () => getBackground(true));
 
 //NEWS
 
