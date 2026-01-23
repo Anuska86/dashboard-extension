@@ -14,7 +14,11 @@ Intelligent Geolocation: Automatically detects your local weather, with a built-
 
 Dynamic Greetings: Context-aware greetings (Good Morning/Afternoon/Evening) that change based on your local time.
 
-Interactive Controls: 
+Detailed Weather Feedback: Now includes specific weather descriptions (e.g., "Scattered Clouds") alongside temperature and city data for better context.
+
+Local Weather Assets: Weather icons are served locally from the extension package rather than external URLs, improving load times and ensuring offline availability for the UI.
+
+Interactive Controls:
 
 - Shuffle News: Click the headline to cycle through cached articles.
 
@@ -34,7 +38,9 @@ HTML5 & CSS3 (Flexbox, CSS Variables, Glassmorphism)
 
 Vanilla JavaScript (ES6+, Fetch API, Async/Await)
 
-Manifest V3 (Chrome Extension API)
+Manifest V3 Compliant: Built using the latest Chrome extension standards for improved security and performance.
+
+Asset Accessibility: Configured web_accessible_resources to securely handle local images and sub-directory assets.
 
 🔑 Required APIs:
 
@@ -89,6 +95,14 @@ To change the type of images fetched from Unsplash, update the query parameters 
 
 // Change 'nature,mountains' to 'architecture', 'travel', etc.
 fetch("[https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains](https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature,mountains)")
+
+Customizing Weather Icons:
+
+The extension uses a curated set of icons located in images/weather_icons/. These match the OpenWeatherMap icon codes. To use your own icons, simply replace the .png files in that folder while keeping the original filenames (e.g., 01d.png).
+
+Customizing the Fallback Background:
+
+To change the default image that appears while the dashboard is loading, replace images/background.jpg with your own high-resolution image. To update the credit for your local image, modify the setInitialFallback() function in index.js.
 
 Managing Cache Settings
 
