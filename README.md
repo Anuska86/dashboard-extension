@@ -1,6 +1,11 @@
 # dashboard-extension
 
-![Dashboard Preview](images/screenshot.png)
+<table>
+  <tr>
+    <td><img src="images/screenshot.png" alt="Dashboard Preview 1" width="500"></td>
+    <td><img src="images/screenshot2.png" alt="Dashboard Preview 2" width="500"></td>
+  </tr>
+</table>
 
 Personal Dashboard Chrome Extension
 
