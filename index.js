@@ -194,6 +194,12 @@ cityInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") fetchWeatherByCity(e.target.value);
 });
 
+document.getElementById("reset-location").addEventListener("click", () => {
+  localStorage.removeItem("userCity");
+  // Reload the page to trigger the original geolocation logic
+  location.reload();
+});
+
 // INITIALIZATION
 setIntitialFallback();
 getBackground();
