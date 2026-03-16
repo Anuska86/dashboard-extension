@@ -10,6 +10,8 @@ const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+bu
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
+let is24Hour = localStorage.getItem("is24Hour") !== "false";
+
 // BACKGROUND MODULE
 function setIntitialFallback() {
   document.body.style.backgroundImage = `url(./images/background.jpg)`;
@@ -155,11 +157,20 @@ function updateTime() {
   const date = new Date();
   const hour = date.getHours();
   const greetingEl = document.getElementById("greeting");
+  const timeBtn = document.getElementById("time-format-btn");
 
-  document.querySelector(".time").textContent = date.toLocaleTimeString([], {
+  const options = {
     hour: "2-digit",
     minute: "2-digit",
-  });
+    hour12: !is24Hour,
+  };
+
+  document.querySelector(".time").textContent = date.toLocaleTimeString(
+    [],
+    options,
+  );
+
+  if (timeBtn) timeBtn.textContent = is24Hour ? "24h" : "12h";
 
   if (hour < 12) greetingEl.textContent = "Good morning!";
   else if (hour < 18) greetingEl.textContent = "Good afternoon!";
@@ -167,24 +178,31 @@ function updateTime() {
 }
 
 // EVENT LISTENERS
+
+//refresh background
 document
   .getElementById("refresh-bg")
   .addEventListener("click", () => getBackground(true));
 
+//click the news
 newsEl.addEventListener("click", (e) => {
   const url = e.currentTarget.dataset.url;
   if (url) window.open(url, "_blank");
 });
 
+//refresh news
 document.getElementById("refresh-news").addEventListener("click", (e) => {
   e.stopPropagation();
   getNews(true);
 });
 
+//edit location
+
 document.getElementById("edit-location-btn").addEventListener("click", () => {
   document.getElementById("location-input-group").classList.toggle("hidden");
 });
 
+//city manually
 document.getElementById("submit-city").addEventListener("click", () => {
   const city = cityInput.value;
   if (city) fetchWeatherByCity(city);
@@ -194,10 +212,18 @@ cityInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") fetchWeatherByCity(e.target.value);
 });
 
+//reset location
 document.getElementById("reset-location").addEventListener("click", () => {
   localStorage.removeItem("userCity");
   // Reload the page to trigger the original geolocation logic
   location.reload();
+});
+
+//time format
+document.getElementById("time-format-btn").addEventListener("click", () => {
+  is24Hour = !is24Hour;
+  localStorage.setItem("is24Hour", is24Hour);
+  updateTime();
 });
 
 // INITIALIZATION
