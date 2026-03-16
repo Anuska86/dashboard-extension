@@ -165,10 +165,14 @@ function updateTime() {
     hour12: !is24Hour,
   };
 
-  document.querySelector(".time").textContent = date.toLocaleTimeString(
-    [],
-    options,
-  );
+  let timeString = date.toLocaleTimeString([], options);
+
+  const timeDisplay = document.querySelector(".time");
+  if (is24Hour) {
+    timeDisplay.innerHTML = `${timeString} <span class="time-suffix">H</span>`;
+  } else {
+    timeDisplay.textContent = timeString;
+  }
 
   if (timeBtn) timeBtn.textContent = is24Hour ? "24h" : "12h";
 

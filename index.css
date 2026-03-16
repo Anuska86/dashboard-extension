@@ -223,6 +223,17 @@ main {
   font-size: 5.5rem;
   font-weight: 800;
   letter-spacing: -2px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 15px;
+}
+
+.time-suffix {
+  font-size: 1.8rem;
+  font-weight: 300;
+  opacity: 0.6;
+  text-transform: lowercase;
 }
 
 #search-form input {
