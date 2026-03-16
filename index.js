@@ -189,31 +189,38 @@ navigator.geolocation.getCurrentPosition(
   { timeout: 10000 },
 );
 
-function fetchWeather(lat, lon) {
-  const cachedWeather = JSON.parse(localStorage.getItem("cachedWeather"));
-  const weatherCacheTime = localStorage.getItem("weatherCacheTime");
-  const now = Date.now();
+//WEATHER
 
-  if (
-    cachedWeather &&
-    weatherCacheTime &&
-    now - weatherCacheTime < 30 * 60 * 1000 &&
-    cachedWeather.coord.lat === lat &&
-    cachedWeather.coord.lon === lon
-  ) {
-    console.log("Loading weather from cache");
-    renderWeather(cachedWeather);
-  } else {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("cachedWeather", JSON.stringify(data));
-        localStorage.setItem("weatherCacheTime", now);
-        renderWeather(data);
-      });
-  }
+//Fetch weather
+function fetchWeather(lat, lon) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      localStorage.setItem("cachedWeather", JSON.stringify(data));
+      localStorage.setItem("weatherCacheTime", Date.now());
+      renderWeather(data);
+    });
+}
+
+// Fetch by city name
+function fetchWeatherByCity(cityName) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${config.WEATHER_API_KEY}`,
+  )
+    .then((res) => {
+      if (!res.ok) throw new Error("City not found");
+      return res.json();
+    })
+    .then((data) => {
+      localStorage.setItem("cachedWeather", JSON.stringify(data));
+      localStorage.setItem("weatherCacheTime", Date.now());
+      renderWeather(data);
+      // Hide the input again
+      document.getElementById("location-input-group").classList.add("hidden");
+    })
+    .catch((err) => alert(err.message));
 }
 
 function renderWeather(data) {
@@ -230,6 +237,26 @@ function renderWeather(data) {
         </div>
     `;
 }
+
+// Toggle the input visibility
+document.getElementById("edit-location-btn").addEventListener("click", () => {
+  document.getElementById("location-input-group").classList.toggle("hidden");
+});
+
+// Handle the manual city submit
+document.getElementById("submit-city").addEventListener("click", () => {
+  const city = document.getElementById("city-input").value;
+  if (city) {
+    fetchWeatherByCity(city);
+  }
+});
+
+// Also allow pressing "Enter" in the input
+document.getElementById("city-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    fetchWeatherByCity(e.target.value);
+  }
+});
 
 /*Search input*/
 

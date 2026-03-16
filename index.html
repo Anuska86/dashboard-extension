@@ -18,7 +18,18 @@
           <div id="news">News</div>
           <button id="refresh-news" title="Fetch new articles">↺</button>
         </div>
-        <div id="weather">Weather</div>
+        <div id="weather-container">
+          <div id="weather"></div>
+          <div id="location-input-group" class="hidden">
+            <input
+              type="text"
+              id="city-input"
+              placeholder="Enter city name..."
+            />
+            <button id="submit-city">OK</button>
+          </div>
+          <button id="edit-location-btn">Edit Location ✎</button>
+        </div>
       </div>
       <div class="center-container">
         <h2 id="greeting">Hello</h2>
