@@ -7,6 +7,29 @@ const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+bu
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
+// Toggle the input visibility
+document.getElementById("edit-location-btn").addEventListener("click", () => {
+  document.getElementById("location-input-group").classList.toggle("hidden");
+});
+
+// Handle the manual city submit
+document.getElementById("submit-city").addEventListener("click", () => {
+  const city = document.getElementById("city-input").value;
+  console.log("Submit clicked! City entered:", city);
+  if (city) {
+    fetchWeatherByCity(city);
+  } else {
+    console.log("No city entered in the input field");
+  }
+});
+
+// Also allow pressing "Enter" in the input
+document.getElementById("city-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    fetchWeatherByCity(e.target.value);
+  }
+});
+
 //BACKGROUND
 
 //Local background
@@ -237,26 +260,6 @@ function renderWeather(data) {
         </div>
     `;
 }
-
-// Toggle the input visibility
-document.getElementById("edit-location-btn").addEventListener("click", () => {
-  document.getElementById("location-input-group").classList.toggle("hidden");
-});
-
-// Handle the manual city submit
-document.getElementById("submit-city").addEventListener("click", () => {
-  const city = document.getElementById("city-input").value;
-  if (city) {
-    fetchWeatherByCity(city);
-  }
-});
-
-// Also allow pressing "Enter" in the input
-document.getElementById("city-input").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    fetchWeatherByCity(e.target.value);
-  }
-});
 
 /*Search input*/
 
