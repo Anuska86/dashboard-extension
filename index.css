@@ -5,13 +5,17 @@
 
 body {
   margin: 0;
-  padding: 15px;
+  padding: 30px;
   background-color: #2b2b2b;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
   background-blend-mode: overlay;
   transition: background-image 1s ease-in-out;
   color: white;
@@ -44,11 +48,19 @@ main {
 #news-container {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding-right: 10px;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+#news-container:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #news {
@@ -99,6 +111,14 @@ main {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+#weather:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #weather img {
@@ -112,7 +132,7 @@ main {
 }
 
 .weather-temp {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 800;
 }
 
@@ -202,6 +222,7 @@ main {
   margin: 0;
   font-size: 5.5rem;
   font-weight: 800;
+  letter-spacing: -2px;
 }
 
 #search-form input {
@@ -254,9 +275,9 @@ main {
 }
 
 #settings-toggle-btn {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 10px;
@@ -264,8 +285,8 @@ main {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   line-height: 1;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  mix-blend-mode: difference;
-  opacity: 0.8;
+  mix-blend-mode: normal;
+  opacity: 1;
 }
 
 #settings-toggle-btn:hover {
