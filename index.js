@@ -226,6 +226,22 @@ document.getElementById("time-format-btn").addEventListener("click", () => {
   updateTime();
 });
 
+// Toggle Settings Menu
+document.getElementById("settings-toggle-btn").addEventListener("click", () => {
+  const menu = document.getElementById("settings-menu");
+  menu.classList.toggle("hidden");
+});
+
+// Close menu if you click anywhere else on the screen
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("settings-menu");
+  const btn = document.getElementById("settings-toggle-btn");
+
+  if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.add("hidden");
+  }
+});
+
 // INITIALIZATION
 setIntitialFallback();
 getBackground();
