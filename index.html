@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -18,6 +19,7 @@
           <div id="news">News</div>
           <button id="refresh-news" title="Fetch new articles">↺</button>
         </div>
+
         <div id="weather-container">
           <div id="location-header">
             <span id="location-status"></span>
@@ -40,6 +42,7 @@
             </button>
           </div>
           <div id="weather"></div>
+
           <div id="location-input-group" class="hidden">
             <input
               type="text"
@@ -48,14 +51,13 @@
             />
             <button id="submit-city">OK</button>
           </div>
-          <button id="edit-location-btn">Edit Location ✎</button>
         </div>
       </div>
+
       <div class="center-container">
         <h2 id="greeting">Hello</h2>
         <div id="time-container">
           <h1 class="time">TIME</h1>
-          <button id="time-format-btn" title="Toggle 12h/24h">24h</button>
         </div>
         <form
           action="https://www.google.com/search"
@@ -71,11 +73,30 @@
           />
         </form>
       </div>
+
       <div id="footer">
         <div id="author-container"></div>
-        <button id="refresh-bg" title="Get new background">↺</button>
+      </div>
+
+      <div id="settings-container">
+        <div id="settings-menu" class="hidden">
+          <div class="setting-item">
+            <span>Time Format</span>
+            <button id="time-format-btn">24h</button>
+          </div>
+          <div class="setting-item">
+            <span>Location</span>
+            <button id="edit-location-btn">Edit ✎</button>
+          </div>
+          <div class="setting-item">
+            <span>Wallpaper</span>
+            <button id="refresh-bg" title="Get new background">New ↺</button>
+          </div>
+        </div>
+        <button id="settings-toggle-btn" title="Settings">⚙️</button>
       </div>
     </main>
+
     <script src="config.js"></script>
     <script src="index.js"></script>
   </body>
