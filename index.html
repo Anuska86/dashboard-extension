@@ -19,7 +19,16 @@
           <button id="refresh-news" title="Fetch new articles">↺</button>
         </div>
         <div id="weather-container">
-          <p id="location-status"></p>
+          <div id="location-header">
+            <span id="location-status"></span>
+            <button
+              id="reset-location"
+              title="Reset to current location"
+              class="hidden"
+            >
+              ⌖
+            </button>
+          </div>
           <div id="weather"></div>
           <div id="location-input-group" class="hidden">
             <input

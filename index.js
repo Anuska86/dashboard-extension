@@ -94,8 +94,19 @@ function renderWeather(data) {
   const iconUrl = `./images/weather_icons/${iconCode}.png`;
 
   const statusEl = document.getElementById("location-status");
+  const resetBtn = document.getElementById("reset-location");
+  const isSavedCity = localStorage.getItem("userCity");
+
   if (statusEl) {
     statusEl.textContent = `Currently showing weather for ${data.name}`;
+  }
+  //If manual city
+  if (resetBtn) {
+    if (isSavedCity) {
+      resetBtn.classList.remove("hidden");
+    } else {
+      resetBtn.classList.add("hidden");
+    }
   }
 
   weatherEl.innerHTML = `
