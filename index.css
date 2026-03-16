@@ -132,10 +132,11 @@ main {
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
+  margin: 3px 5px;
 }
 
 #location-status {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   opacity: 0.6;
   font-style: italic;
 }
@@ -216,6 +217,11 @@ main {
   transition: width 0.3s ease;
 }
 
+#search-form input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 1;
+}
+
 #search-form input:focus {
   width: 420px;
   background: rgba(255, 255, 255, 0.3);
@@ -239,8 +245,8 @@ main {
 /* SETTINGS MODULE */
 #settings-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -248,19 +254,23 @@ main {
 }
 
 #settings-toggle-btn {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   line-height: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  mix-blend-mode: difference;
+  opacity: 0.8;
 }
 
 #settings-toggle-btn:hover {
-  transform: rotate(45deg);
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg) scale(1.1);
 }
 
 #settings-menu {
