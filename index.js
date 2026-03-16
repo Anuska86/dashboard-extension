@@ -1,45 +1,30 @@
+// 1. CONFIG & GLOBALS
 const authorContainer = document.getElementById("author-container");
 const weatherEl = document.getElementById("weather");
 const newsEl = document.getElementById("news");
+const cityInput = document.getElementById("city-input");
+const searchInput = document.querySelector("#search-form input");
 
 const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+business&language=en&sortBy=relevancy&pageSize=20&apiKey=${config.NEWS_API_KEY}`;
 
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
-// Toggle the input visibility
-document.getElementById("edit-location-btn").addEventListener("click", () => {
-  document.getElementById("location-input-group").classList.toggle("hidden");
-});
-
-// Handle the manual city submit
-document.getElementById("submit-city").addEventListener("click", () => {
-  const city = document.getElementById("city-input").value;
-  console.log("Submit clicked! City entered:", city);
-  if (city) {
-    fetchWeatherByCity(city);
-  } else {
-    console.log("No city entered in the input field");
-  }
-});
-
-// Also allow pressing "Enter" in the input
-document.getElementById("city-input").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    fetchWeatherByCity(e.target.value);
-  }
-});
-
-//BACKGROUND
-
-//Local background
-
+// 2. BACKGROUND MODULE
 function setIntitialFallback() {
   document.body.style.backgroundImage = `url(./images/background.jpg)`;
   authorContainer.innerHTML = `Picture by: <a href="https://emosqueira.com/" target="_blank" style="color: white; text-decoration: underline;">Eduardo Mosqueira Rey</a>`;
 }
 
-//Fetch from Unsplash or cache
+function updateBackgroundUI(data) {
+  const imgUrl = data.urls.full;
+  const tempImg = new Image();
+  tempImg.src = imgUrl;
+  tempImg.onload = () => {
+    document.body.style.backgroundImage = `url(${imgUrl})`;
+    authorContainer.innerHTML = `Picture by: ${data.user.name}`;
+  };
+}
 
 function getBackground(forceRefresh = false) {
   const cachedBg = localStorage.getItem("cachedBg");
@@ -59,54 +44,37 @@ function getBackground(forceRefresh = false) {
         localStorage.setItem("bgCacheTime", now);
         updateBackgroundUI(data);
       })
-      .catch((err) => {
-        console.error("Unsplash fetch failed, keeping local fallback", err);
-      });
+      .catch((err) => console.error("Unsplash fetch failed", err));
   }
 }
 
-//Load the image first
+// 3. NEWS MODULE
+function displayNews(articles) {
+  const randomIndex = Math.floor(Math.random() * articles.length);
+  const article = articles[randomIndex];
+  const sourceName = article.source.name ? ` [${article.source.name}]` : "";
 
-function updateBackgroundUI(data) {
-  const imgUrl = data.urls.full;
-  const tempImg = new Image();
-  tempImg.src = imgUrl;
-
-  tempImg.onload = () => {
-    document.body.style.backgroundImage = `url(${imgUrl})`;
-    authorContainer.innerHTML = `Picture by:${data.user.name}`;
-  };
+  newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
+  newsEl.title = `Click to read article | Click ↺ to shuffle`;
+  newsEl.dataset.url = article.url;
+  newsEl.setAttribute("data-key", modifierKey);
+  newsEl.style.cursor = "pointer";
 }
 
-setIntitialFallback();
-getBackground();
-
-document
-  .getElementById("refresh-bg")
-  .addEventListener("click", () => getBackground(true));
-
-//NEWS
-
-//get the news
-
 function getNews(forceRefresh = false) {
-  const newsEl = document.getElementById("news");
   const cachedNews = localStorage.getItem("cachedNews");
   const cacheTime = localStorage.getItem("newsCacheTime");
   const now = Date.now();
-  const expiry = 30 * 60 * 1000; // 30 minutes
+  const expiry = 30 * 60 * 1000;
 
   if (!forceRefresh && cachedNews && cacheTime && now - cacheTime < expiry) {
-    console.log("Shuffling from cached news");
     displayNews(JSON.parse(cachedNews));
   } else {
-    console.log("Fetching fresh news from API");
     newsEl.textContent = "Fetching news...";
-
     fetch(newsUrl)
       .then((res) => res.json())
       .then((data) => {
-        if (data.articles && data.articles.length > 0) {
+        if (data.articles?.length > 0) {
           localStorage.setItem("cachedNews", JSON.stringify(data.articles));
           localStorage.setItem("newsCacheTime", now);
           displayNews(data.articles);
@@ -119,133 +87,7 @@ function getNews(forceRefresh = false) {
   }
 }
 
-// Show random article
-function displayNews(articles) {
-  const randomIndex = Math.floor(Math.random() * articles.length);
-  const article = articles[randomIndex];
-  const newsEl = document.getElementById("news");
-
-  const sourceName = article.source.name ? ` [${article.source.name}]` : "";
-
-  // Update the UI text
-  newsEl.textContent = `Breaking: ${article.title}${sourceName}`;
-
-  // hint on hover
-  newsEl.title = `Click to read article | Click ↺ to shuffle`;
-
-  // Save the URL
-  newsEl.dataset.url = article.url;
-
-  newsEl.setAttribute("data-key", modifierKey);
-
-  newsEl.style.cursor = "pointer";
-}
-
-document.getElementById("news").addEventListener("click", (e) => {
-  const url = e.currentTarget.dataset.url;
-
-  // CTRL + CLICK to open link
-  if (url) {
-    window.open(url, "_blank");
-  }
-});
-
-document.getElementById("refresh-news").addEventListener("click", (e) => {
-  e.stopPropagation();
-  getNews(true); // Force fresh API call
-});
-
-// Refresh button logic
-document.getElementById("refresh-news").addEventListener("click", (e) => {
-  e.stopPropagation();
-  getNews(true); // Force fresh API call
-});
-
-getNews();
-
-//Greeting
-
-function getGreeting() {
-  const hour = new Date().getHours();
-  const greetingEl = document.getElementById("greeting");
-
-  if (hour < 12) {
-    greetingEl.textContent = "Good morning!";
-  } else if (hour < 18) {
-    greetingEl.textContent = "Good afternoon!";
-  } else {
-    greetingEl.textContent = "Good evening!";
-  }
-}
-
-//Time
-
-function updateTime() {
-  const date = new Date();
-  document.querySelector(".time").textContent = date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  getGreeting();
-}
-setInterval(updateTime, 1000);
-updateTime();
-
-//Geolocation
-
-navigator.geolocation.getCurrentPosition(
-  (position) => {
-    console.log("Location found!", position.coords);
-    // Success: Use user's real location
-    const { latitude, longitude } = position.coords;
-    fetchWeather(latitude, longitude);
-  },
-  (err) => {
-    console.warn("Geolocation failed, using default location.");
-
-    // DEFAULT COORDINATES
-    const defaultLat = 51.5074;
-    const defaultLon = -0.1278;
-
-    fetchWeather(defaultLat, defaultLon);
-  },
-  { timeout: 10000 },
-);
-
-//WEATHER
-
-//Fetch weather
-function fetchWeather(lat, lon) {
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      localStorage.setItem("cachedWeather", JSON.stringify(data));
-      localStorage.setItem("weatherCacheTime", Date.now());
-      renderWeather(data);
-    });
-}
-
-// Fetch by city name
-function fetchWeatherByCity(cityName) {
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${config.WEATHER_API_KEY}`,
-  )
-    .then((res) => {
-      if (!res.ok) throw new Error("City not found");
-      return res.json();
-    })
-    .then((data) => {
-      localStorage.setItem("cachedWeather", JSON.stringify(data));
-      localStorage.setItem("weatherCacheTime", Date.now());
-      renderWeather(data);
-      // Hide the input again
-      document.getElementById("location-input-group").classList.add("hidden");
-    })
-    .catch((err) => alert(err.message));
-}
-
+// 4. WEATHER & GEOLOCATION MODULE
 function renderWeather(data) {
   const iconCode = data.weather[0].icon;
   const description = data.weather[0].description;
@@ -261,9 +103,90 @@ function renderWeather(data) {
     `;
 }
 
-/*Search input*/
-
-const searchInput = document.querySelector("#search-form input");
-if (searchInput) {
-  searchInput.focus();
+function fetchWeather(lat, lon) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      localStorage.setItem("cachedWeather", JSON.stringify(data));
+      localStorage.setItem("weatherCacheTime", Date.now());
+      renderWeather(data);
+    });
 }
+
+function fetchWeatherByCity(cityName) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${config.WEATHER_API_KEY}`,
+  )
+    .then((res) => {
+      if (!res.ok) throw new Error("City not found");
+      return res.json();
+    })
+    .then((data) => {
+      localStorage.setItem("cachedWeather", JSON.stringify(data));
+      localStorage.setItem("weatherCacheTime", Date.now());
+      renderWeather(data);
+      document.getElementById("location-input-group").classList.add("hidden");
+    })
+    .catch((err) => alert(err.message));
+}
+
+// 5. TIME & GREETING MODULE
+function updateTime() {
+  const date = new Date();
+  const hour = date.getHours();
+  const greetingEl = document.getElementById("greeting");
+
+  document.querySelector(".time").textContent = date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  if (hour < 12) greetingEl.textContent = "Good morning!";
+  else if (hour < 18) greetingEl.textContent = "Good afternoon!";
+  else greetingEl.textContent = "Good evening!";
+}
+
+// 6. EVENT LISTENERS
+document
+  .getElementById("refresh-bg")
+  .addEventListener("click", () => getBackground(true));
+
+newsEl.addEventListener("click", (e) => {
+  const url = e.currentTarget.dataset.url;
+  if (url) window.open(url, "_blank");
+});
+
+document.getElementById("refresh-news").addEventListener("click", (e) => {
+  e.stopPropagation();
+  getNews(true);
+});
+
+document.getElementById("edit-location-btn").addEventListener("click", () => {
+  document.getElementById("location-input-group").classList.toggle("hidden");
+});
+
+document.getElementById("submit-city").addEventListener("click", () => {
+  const city = cityInput.value;
+  if (city) fetchWeatherByCity(city);
+});
+
+cityInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") fetchWeatherByCity(e.target.value);
+});
+
+// 7. INITIALIZATION
+setIntitialFallback();
+getBackground();
+getNews();
+updateTime();
+setInterval(updateTime, 1000);
+
+if (searchInput) searchInput.focus();
+
+navigator.geolocation.getCurrentPosition(
+  (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
+  (err) => fetchWeather(51.5074, -0.1278),
+  { timeout: 10000 },
+);
