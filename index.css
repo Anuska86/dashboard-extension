@@ -183,6 +183,14 @@ main {
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+#location-status {
+  font-size: 0.7rem;
+  margin: 0 0 5px 0;
+  opacity: 0.6;
+  font-style: italic;
+  text-align: right;
+}
 /*City input*/
 
 #city-input {

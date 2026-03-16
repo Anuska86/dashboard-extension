@@ -93,6 +93,11 @@ function renderWeather(data) {
   const description = data.weather[0].description;
   const iconUrl = `./images/weather_icons/${iconCode}.png`;
 
+  const statusEl = document.getElementById("location-status");
+  if (statusEl) {
+    statusEl.textContent = `Currently showing weather for ${data.name}`;
+  }
+
   weatherEl.innerHTML = `
         <img src="${iconUrl}" alt="${description}" />
         <div class="weather-info">
