@@ -212,7 +212,7 @@ const savedCity = localStorage.getItem("userCity");
 if (searchInput) searchInput.focus();
 
 if (savedCity) {
-  // If user manually set a city before, use it!
+  // If user manually set a city before, use it
   console.log("Loading weather for saved city:", savedCity);
   fetchWeatherByCity(savedCity);
 } else {

@@ -191,6 +191,44 @@ main {
   font-style: italic;
   text-align: right;
 }
+
+#location-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+#location-status {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+#reset-location {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+#reset-location:hover {
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 1;
+  transform: scale(1.1);
+}
+#reset-location svg {
+  display: block;
+}
+
 /*City input*/
 
 #city-input {
