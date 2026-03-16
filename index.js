@@ -189,17 +189,19 @@ navigator.geolocation.getCurrentPosition(
 );
 
 function fetchWeather(lat, lon) {
-  const cachedWeather = localStorage.getItem("cachedWeather");
+  const cachedWeather = JSON.parse(localStorage.getItem("cachedWeather"));
   const weatherCacheTime = localStorage.getItem("weatherCacheTime");
   const now = Date.now();
 
   if (
     cachedWeather &&
     weatherCacheTime &&
-    now - weatherCacheTime < 30 * 60 * 1000
+    now - weatherCacheTime < 30 * 60 * 1000 &&
+    cachedWeather.coord.lat === lat &&
+    cachedWeather.coord.lon === lon
   ) {
     console.log("Loading weather from cache");
-    renderWeather(JSON.parse(cachedWeather));
+    renderWeather(cachedWeather);
   } else {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${config.WEATHER_API_KEY}`,
