@@ -172,6 +172,7 @@ updateTime();
 
 navigator.geolocation.getCurrentPosition(
   (position) => {
+    console.log("Location found!", position.coords);
     // Success: Use user's real location
     const { latitude, longitude } = position.coords;
     fetchWeather(latitude, longitude);
