@@ -4,6 +4,7 @@
   <tr>
     <td><img src="images/screenshot.png" alt="Dashboard Preview 1" width="500"></td>
     <td><img src="images/screenshot2.png" alt="Dashboard Preview 2" width="500"></td>
+    <td><img src="images/screenshot3.png" alt="Dashboard Preview 3" width="500"></td>
   </tr>
 </table>
 
@@ -11,41 +12,49 @@ Personal Dashboard Chrome Extension
 
 A minimalist, high-performance Chrome Extension that replaces the "New Tab" page with a beautiful, data-driven dashboard. Built with vanilla JavaScript and integrated with multiple third-party APIs.
 
-🚀 Features:
+🚀 New in Version 1.0.5:
 
-Smart Caching: Optimized performance using localStorage to cache News, Weather, and Background data. This reduces API calls, avoids rate limits, and ensures instant loading.
+- Customizable Settings Menu: A new sleek, glassmorphism-style settings panel to manage your dashboard preferences.
 
-Intelligent Geolocation: Automatically detects your local weather, with a built-in London-fallback if location permissions are denied.
+- Time Format Toggle: Switch instantly between 12-hour and 24-hour (Military) time formats. The 24h mode features a technical "h" suffix for a professional dashboard look.
 
-Dynamic Greetings: Context-aware greetings (Good Morning/Afternoon/Evening) that change based on your local time.
+Location Override: Don't want to use GPS? You can now manually enter your city to get weather data for any location in the world.
 
-Detailed Weather Feedback: Now includes specific weather descriptions (e.g., "Scattered Clouds") alongside temperature and city data for better context.
+Persistent Preferences: Your time format and custom location are saved automatically to localStorage, so your dashboard stays exactly how you like it.
 
-Local Weather Assets: Weather icons are served locally from the extension package rather than external URLs, improving load times and ensuring offline availability for the UI.
+✨ Core Features:
 
-Interactive Controls:
+- Smart Caching: Optimized performance using localStorage to cache News, Weather, and Background data. This reduces API calls and ensures instant loading.
 
-- Shuffle News: Click the headline to cycle through cached articles.
+- Intelligent Geolocation: Automatically detects your local weather, with a built-in London fallback if location permissions are denied.
 
-- Smart Navigation: Use Ctrl + Click (Windows) or Cmd + Click (Mac) to open the full article in a new tab.
+- Dynamic Greetings: Context-aware greetings (Good Morning/Afternoon/Evening) that change based on your local time.
 
-- Dynamic Hints: Intelligent hover states that detect your Operating System to show the correct shortcut instructions.
+- Local Weather Assets: Weather icons are served locally from the extension package, ensuring offline availability and lightning-fast UI rendering.
 
-- Force Refresh: Dedicated refresh buttons for both News and Backgrounds to bypass cache and fetch new data instantly.
+🕹️ Interactive Controls:
+
+- Settings Toggle: Click the ⚙️ icon in the bottom right to customize your experience.
+
+- Manual Weather: Use the "Edit Location" button in the settings menu to search for weather in a specific city.
+
+- Shuffle News: Click the headline to cycle through cached articles instantly.
+
+- Smart Navigation: Use Ctrl + Click (Windows) or Cmd + Click (Mac) to open full articles in a new tab.
+
+- Force Refresh: Dedicated refresh icons for both News and Backgrounds to bypass cache and fetch fresh data.
 
 - Integrated Search: A centered, glassmorphism-styled Google search bar with auto-focus for immediate utility.
 
-- Enhanced UI: Modern Glassmorphism design with backdrop-filter blur effects and a dark overlay to ensure text legibility regardless of the background brightness.
-
 🛠️ Tech Stack:
 
-HTML5 & CSS3 (Flexbox, CSS Variables, Glassmorphism)
+- HTML5 & CSS3 (Flexbox, CSS Variables, Glassmorphism)
 
-Vanilla JavaScript (ES6+, Fetch API, Async/Await)
+- Vanilla JavaScript (ES6+, Fetch API, Async/Await)
 
-Manifest V3 Compliant: Built using the latest Chrome extension standards for improved security and performance.
+- Manifest V3 Compliant: Built using the latest Chrome extension standards for improved security and performance.
 
-Asset Accessibility: Configured web_accessible_resources to securely handle local images and sub-directory assets.
+- Asset Accessibility: Configured web_accessible_resources to securely handle local images and sub-directory assets.
 
 🔑 Required APIs:
 
