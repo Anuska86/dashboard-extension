@@ -1,4 +1,4 @@
-// 1. CONFIG & GLOBALS
+// CONFIG & GLOBALS
 const authorContainer = document.getElementById("author-container");
 const weatherEl = document.getElementById("weather");
 const newsEl = document.getElementById("news");
@@ -10,7 +10,7 @@ const newsUrl = `https://newsapi.org/v2/everything?q=technology+OR+science+OR+bu
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 const modifierKey = isMac ? "Cmd" : "Ctrl";
 
-// 2. BACKGROUND MODULE
+// BACKGROUND MODULE
 function setIntitialFallback() {
   document.body.style.backgroundImage = `url(./images/background.jpg)`;
   authorContainer.innerHTML = `Picture by: <a href="https://emosqueira.com/" target="_blank" style="color: white; text-decoration: underline;">Eduardo Mosqueira Rey</a>`;
@@ -48,7 +48,7 @@ function getBackground(forceRefresh = false) {
   }
 }
 
-// 3. NEWS MODULE
+// NEWS MODULE
 function displayNews(articles) {
   const randomIndex = Math.floor(Math.random() * articles.length);
   const article = articles[randomIndex];
@@ -87,7 +87,7 @@ function getNews(forceRefresh = false) {
   }
 }
 
-// 4. WEATHER & GEOLOCATION MODULE
+// WEATHER & GEOLOCATION MODULE
 function renderWeather(data) {
   const iconCode = data.weather[0].icon;
   const description = data.weather[0].description;
@@ -124,15 +124,17 @@ function fetchWeatherByCity(cityName) {
       return res.json();
     })
     .then((data) => {
+      localStorage.setItem("userCity", cityName);
       localStorage.setItem("cachedWeather", JSON.stringify(data));
       localStorage.setItem("weatherCacheTime", Date.now());
       renderWeather(data);
       document.getElementById("location-input-group").classList.add("hidden");
+      cityInput.value = "";
     })
     .catch((err) => alert(err.message));
 }
 
-// 5. TIME & GREETING MODULE
+// TIME & GREETING MODULE
 function updateTime() {
   const date = new Date();
   const hour = date.getHours();
@@ -148,7 +150,7 @@ function updateTime() {
   else greetingEl.textContent = "Good evening!";
 }
 
-// 6. EVENT LISTENERS
+// EVENT LISTENERS
 document
   .getElementById("refresh-bg")
   .addEventListener("click", () => getBackground(true));
@@ -176,17 +178,26 @@ cityInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") fetchWeatherByCity(e.target.value);
 });
 
-// 7. INITIALIZATION
+// INITIALIZATION
 setIntitialFallback();
 getBackground();
 getNews();
 updateTime();
 setInterval(updateTime, 1000);
 
+const savedCity = localStorage.getItem("userCity");
+
 if (searchInput) searchInput.focus();
 
-navigator.geolocation.getCurrentPosition(
-  (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
-  (err) => fetchWeather(51.5074, -0.1278),
-  { timeout: 10000 },
-);
+if (savedCity) {
+  // If user manually set a city before, use it!
+  console.log("Loading weather for saved city:", savedCity);
+  fetchWeatherByCity(savedCity);
+} else {
+  // If no saved city, try to find them automatically
+  navigator.geolocation.getCurrentPosition(
+    (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
+    (err) => fetchWeather(51.5074, -0.1278), // Default to London
+    { timeout: 10000 },
+  );
+}
