@@ -236,26 +236,25 @@ document.getElementById("settings-toggle-btn").addEventListener("click", () => {
   menu.classList.toggle("hidden");
 });
 
-// Close menu if you click anywhere else on the screen
+// Global Click Listener for UI management
 document.addEventListener("click", (e) => {
-  const menu = document.getElementById("settings-menu");
-  const btn = document.getElementById("settings-toggle-btn");
-
-  const locationInputGroup = document.getElementById("location-input-group");
+  const settingsMenu = document.getElementById("settings-menu");
+  const settingsBtn = document.getElementById("settings-toggle-btn");
+  const locationInput = document.getElementById("location-input-group");
   const editLocationBtn = document.getElementById("edit-location-btn");
 
-  if (!menu.contains(e.target) && !btn.contains(e.target)) {
-    menu.classList.add("hidden");
+  // Close Settings if clicking outside
+  if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
+    settingsMenu.classList.add("hidden");
   }
 
-  // Logic for Location Input Group
-  // Close it only if it's currently open and the user clicks outside
+  // Close Location Input if clicking outside (and it is actually visible)
   if (
-    !locationInputGroup.classList.contains("hidden") &&
-    !locationInputGroup.contains(e.target) &&
+    !locationInput.classList.contains("hidden") &&
+    !locationInput.contains(e.target) &&
     !editLocationBtn.contains(e.target)
   ) {
-    locationInputGroup.classList.add("hidden");
+    locationInput.classList.add("hidden");
   }
 });
 
@@ -281,7 +280,7 @@ if (searchInput) searchInput.focus();
 
 if (savedCity) {
   // If user manually set a city before, use it
-  console.log("Loading weather for saved city:", savedCity);
+  console.info("Loading weather for saved city:", savedCity);
   fetchWeatherByCity(savedCity);
 } else {
   // If no saved city, try to find them automatically
