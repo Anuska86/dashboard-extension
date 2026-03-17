@@ -223,7 +223,7 @@ document.getElementById("reset-location").addEventListener("click", () => {
   location.reload();
 });
 
-//time format
+//Time format
 document.getElementById("time-format-btn").addEventListener("click", () => {
   is24Hour = !is24Hour;
   localStorage.setItem("is24Hour", is24Hour);
@@ -241,8 +241,30 @@ document.addEventListener("click", (e) => {
   const menu = document.getElementById("settings-menu");
   const btn = document.getElementById("settings-toggle-btn");
 
+  const locationInputGroup = document.getElementById("location-input-group");
+  const editLocationBtn = document.getElementById("edit-location-btn");
+
   if (!menu.contains(e.target) && !btn.contains(e.target)) {
     menu.classList.add("hidden");
+  }
+
+  // Logic for Location Input Group
+  // Close it only if it's currently open and the user clicks outside
+  if (
+    !locationInputGroup.classList.contains("hidden") &&
+    !locationInputGroup.contains(e.target) &&
+    !editLocationBtn.contains(e.target)
+  ) {
+    locationInputGroup.classList.add("hidden");
+  }
+});
+
+//Hit Est key yo close any open UI element
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("settings-menu").classList.add("hidden");
+    document.getElementById("location-input-group").classList.add("hidden");
   }
 });
 
