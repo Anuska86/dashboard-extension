@@ -149,7 +149,14 @@ function fetchWeatherByCity(cityName) {
       document.getElementById("location-input-group").classList.add("hidden");
       cityInput.value = "";
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      const statusEl = document.getElementById("location-status");
+      if (statusEl) {
+        statusEl.textContent = "Offline or Connection Timed Out";
+        statusEl.style.color = "#ff6b6b";
+      }
+      console.error("Weather error:", err);
+    });
 }
 
 // TIME & GREETING MODULE
